@@ -20,6 +20,10 @@ import java.util.Set;
 /**
  * Created by eleven on 3/18/14.
  */
+
+/**
+ * CHMParser - parser a chm file to get plain text
+ */
 public class CHMParser extends AbstractParser{
 
     private static final Set<MediaType> SUPPORTED_TYPES =

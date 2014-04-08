@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Extract zip file
+ */
+
 public class Extractor {
 
     public static class ExtractionException extends Exception {

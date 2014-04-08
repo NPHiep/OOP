@@ -73,27 +73,7 @@
       <file leaf-file-name="TestTika.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="0" selection-start="1313" selection-end="1313" vertical-scroll-proportion="0.78253424" vertical-offset="188" max-vertical-offset="795">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextTool.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/TextTool.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="30" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="1515">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Word.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/Word.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="25" selection-start="875" selection-end="875" vertical-scroll-proportion="0.0" vertical-offset="143" max-vertical-offset="765">
+            <state line="55" column="49" selection-start="1699" selection-end="1746" vertical-scroll-proportion="0.45454547" vertical-offset="470" max-vertical-offset="915">
               <folding />
             </state>
           </provider>
@@ -122,9 +102,9 @@
         <option value="$PROJECT_DIR$/src/ooptest/valuess/Extractor.java" />
         <option value="$PROJECT_DIR$/src/ooptest/valuess/utils/parsers/CHMParser.java" />
         <option value="$PROJECT_DIR$/src/ooptest/valuess/utils/parsers/Extractor.java" />
+        <option value="$PROJECT_DIR$/src/ooptest/valuess/utils/text/Word.java" />
         <option value="$PROJECT_DIR$/src/ooptest/valuess/utils/text/WordTool.java" />
         <option value="$PROJECT_DIR$/src/ooptest/valuess/utils/text/TextTool.java" />
-        <option value="$PROJECT_DIR$/src/ooptest/valuess/utils/text/Word.java" />
         <option value="$PROJECT_DIR$/src/ooptest/valuess/TestTika.java" />
       </list>
     </option>
@@ -163,12 +143,18 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="OOPProject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -246,11 +232,13 @@
               <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parsers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -623,12 +611,17 @@
       <workItem from="1396018524467" duration="1989000" />
       <workItem from="1396664299539" duration="599000" />
       <workItem from="1396685169923" duration="168000" />
-      <workItem from="1396885718063" duration="62000" />
+      <workItem from="1396885718063" duration="110000" />
+      <workItem from="1396885855470" duration="619000" />
+      <workItem from="1396943523009" duration="16000" />
+      <workItem from="1396948075621" duration="1036000" />
+      <workItem from="1396949154610" duration="3699000" />
+      <workItem from="1396959246667" duration="415000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36505000" />
+    <option name="totallyTimeSpent" value="42338000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="27" width="1368" height="742" extended-state="6" />
@@ -647,6 +640,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32569557" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -660,7 +654,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32626426" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -685,12 +678,24 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/TextTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="30" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="1515">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/Word.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="25" selection-start="875" selection-end="875" vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="0" selection-start="1313" selection-end="1313" vertical-scroll-proportion="0.0" vertical-offset="305" max-vertical-offset="795">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -711,9 +716,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="21" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" vertical-offset="142" max-vertical-offset="780">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -734,9 +737,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="21" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" vertical-offset="142" max-vertical-offset="780">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -757,9 +758,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="26" selection-start="977" selection-end="977" vertical-scroll-proportion="0.0" vertical-offset="143" max-vertical-offset="750">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -773,9 +772,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="9" selection-start="993" selection-end="993" vertical-scroll-proportion="0.0" vertical-offset="305" max-vertical-offset="750">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -789,9 +786,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="0" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="690">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -815,9 +810,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="71" selection-start="1066" selection-end="1066" vertical-scroll-proportion="0.0" vertical-offset="247" max-vertical-offset="690">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -841,9 +834,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="47" selection-start="998" selection-end="998" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="720">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -860,9 +851,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="5" selection-start="1090" selection-end="1090" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="540">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -879,9 +868,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="0" selection-start="864" selection-end="864" vertical-scroll-proportion="0.0" vertical-offset="435" max-vertical-offset="600">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -898,9 +885,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="13" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="765">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -912,9 +897,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="48" selection-start="716" selection-end="716" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="765">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -926,9 +909,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="48" selection-start="716" selection-end="716" vertical-scroll-proportion="0.0" vertical-offset="149" max-vertical-offset="765">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -940,9 +921,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="48" selection-start="716" selection-end="716" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -954,9 +933,7 @@
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="48" selection-start="716" selection-end="716" vertical-scroll-proportion="0.0" vertical-offset="149" max-vertical-offset="765">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -975,43 +952,55 @@
         <state line="6" column="13" selection-start="150" selection-end="150" vertical-scroll-proportion="0.19582245" vertical-offset="0" max-vertical-offset="383" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/parsers/Extractor.java">
+    <entry file="jar:///usr/lib/jvm/java-1.7.0-openjdk/jre/lib/rt.jar!/java/util/ArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="49" selection-start="9108" selection-end="9108" vertical-scroll-proportion="0.0" vertical-offset="3980" max-vertical-offset="4455" />
+        <state line="168" column="0" selection-start="6117" selection-end="6117" vertical-scroll-proportion="0.7580645" vertical-offset="2223" max-vertical-offset="2595" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/parsers/CHMParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="0" selection-start="3031" selection-end="3031" vertical-scroll-proportion="-0.12903225" vertical-offset="1233" max-vertical-offset="1605" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/WordTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="21" selection-start="183" selection-end="183" vertical-scroll-proportion="0.27272728" vertical-offset="0" max-vertical-offset="385">
-          <folding />
+        <state line="24" column="50" selection-start="688" selection-end="688" vertical-scroll-proportion="0.36290324" vertical-offset="0" max-vertical-offset="1725">
+          <folding>
+            <element signature="e#1724#1725#0" expanded="true" />
+            <element signature="e#1755#1756#0" expanded="true" />
+            <element signature="e#1811#1812#0" expanded="true" />
+            <element signature="e#1855#1856#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/TextTool.java">
+    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/parsers/Extractor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="30" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0" vertical-offset="335" max-vertical-offset="1485">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4395">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/Word.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="25" selection-start="875" selection-end="875" vertical-scroll-proportion="0.0" vertical-offset="143" max-vertical-offset="765">
+        <state line="26" column="5" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="900">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/WordTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="40" selection-start="123" selection-end="123" vertical-scroll-proportion="0.27272728" vertical-offset="0" max-vertical-offset="385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/utils/text/TextTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="28" selection-start="296" selection-end="296" vertical-scroll-proportion="0.5645161" vertical-offset="0" max-vertical-offset="1755">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ooptest/valuess/TestTika.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1313" selection-end="1313" vertical-scroll-proportion="0.78253424" vertical-offset="188" max-vertical-offset="795">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="55" column="49" selection-start="1699" selection-end="1746" vertical-scroll-proportion="0.45454547" vertical-offset="470" max-vertical-offset="915">
+          <folding />
         </state>
       </provider>
     </entry>
