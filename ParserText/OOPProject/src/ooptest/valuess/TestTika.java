@@ -21,7 +21,7 @@ public class TestTika {
 
     public static void main(String[] args) {
         System.out.println(new Boolean("true"));
-        String fileName = "/home/eleven/Downloads/test.chm";
+        String fileName = "/home/eleven/Downloads/math.pdf";
         ContentHandler handler = new BodyContentHandler(-1);
         Metadata metadata = new Metadata();
         InputStream input = null;
@@ -53,13 +53,24 @@ public class TestTika {
             }
         }
 
-//        System.out.println(handler.toString());
-
         TextTool text = new TextTool(handler.toString());
 
         // Parser text to word list
         ArrayList<Word> wordArray = text.toWordArray();
         Word[] words = wordArray.toArray(new Word[wordArray.size()]);
+
+        // output to file
+        try {
+            FileOutputStream output = new FileOutputStream("/home/eleven/test.txt");
+            for (int i = 0; i < words.length; i++){
+                output.write((words[i]+"\n").getBytes());
+            }
+            output.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Find a sentence contains a word
         String result = text.getSentence("hello");

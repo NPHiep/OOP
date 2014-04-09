@@ -11,4 +11,8 @@ public class WordTool {
     public static boolean near(String word, String aWord) {
         return false;
     }
+
+    public static boolean checkInDict(String word){
+        return true;
+    }
 }

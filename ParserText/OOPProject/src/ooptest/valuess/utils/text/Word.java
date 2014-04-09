@@ -34,6 +34,10 @@ public class Word implements Comparable {
         return frequency;
     }
 
+    public String toString(){
+        return word;
+    }
+
     public String[] getNearWords() {
         return nearWord.toArray(new String[nearWord.size()]);
     }
