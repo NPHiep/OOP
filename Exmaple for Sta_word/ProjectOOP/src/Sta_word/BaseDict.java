@@ -6,6 +6,14 @@
  */
 package Sta_word;
 
+import RunProject.RunProject;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Bùi Đức Hạnh
@@ -17,7 +25,36 @@ public class BaseDict extends Table{
     public BaseDict (){
         super();
     }
-    
+    public void ImportData(){
+                BufferedReader reader = null;
+                      try {
+            reader = new BufferedReader(new FileReader("data.txt"));
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(" ");
+                    if (parts[parts.length-2].compareTo("")!=0){
+                    String BasicWord = parts[1];
+                        int type = Integer.parseInt(parts[2]);
+                        this.addAWordIntoDict(parts[0], BasicWord, type);
+                    }
+                    else {
+                        this.addAWordIntoDict(parts[0], parts[0], 1);
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(RunProject.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RunProject.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException ex) {
+                Logger.getLogger(RunProject.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public void addAWordIntoDict(String Word, String BasicWord, int type){
         addData(Word, BasicWord, type);
     }
