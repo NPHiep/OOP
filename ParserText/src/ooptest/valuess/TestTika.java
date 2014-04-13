@@ -12,16 +12,14 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Created by eleven on 3/12/14.
  */
 public class TestTika {
 
-    public static void main(String[] args) {
-        System.out.println(new Boolean("true"));
-        String fileName = "D:\\Study\\Data\\Ebook\\information theory infernce and learning algorithms david jc mackey_2.pdf";
+    public static void main(String[] args) {        
+        String fileName = "/home/eleven/Downloads/math.pdf";
         ContentHandler handler = new BodyContentHandler(-1);
         Metadata metadata = new Metadata();
         InputStream input = null;
@@ -35,6 +33,7 @@ public class TestTika {
         }
 
 
+        long start = System.currentTimeMillis();
         try {
             if (fileName.endsWith(".pdf"))
                 (new PDFParser()).parse(input, handler, metadata, new ParseContext());
@@ -52,16 +51,19 @@ public class TestTika {
             } catch (IOException e) {
             }
         }
+        
+        System.out.println("Time parser: " + (System.currentTimeMillis() - start)/1000+"s");
 
+        start = System.currentTimeMillis();
         TextTool text = new TextTool(handler.toString());
-
+        
         // Parser text to word list
-        ArrayList<Word> wordArray = text.toWordArray();
-        Word[] words = wordArray.toArray(new Word[wordArray.size()]);
+        Word[] words = text.toWordArray();                       
+        System.out.println("Time parser to word list: " + (System.currentTimeMillis() - start)/1000+"s");
 
         // output to file
         try {
-            FileOutputStream output = new FileOutputStream("D:\\Eleven\\test.txt");
+            FileOutputStream output = new FileOutputStream("/home/eleven/test.txt");
             for (int i = 0; i < words.length; i++){
                 output.write((words[i]+"\n").getBytes());
             }
@@ -71,8 +73,14 @@ public class TestTika {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+                
+        start = System.currentTimeMillis();
         // Find a sentence contains a word
-        String result = text.getSentence("hello");
+        String[] result = text.getSentence("development");
+        System.out.println("Time parser to find sentence: " + (System.currentTimeMillis() - start)/1000+"s");
+        System.out.println(result.length+ " sentence(s) found");
+        for (int i = 0; i < result.length; i++){
+        	System.out.println("-->>"+result[i]);
+        }
     }
 }

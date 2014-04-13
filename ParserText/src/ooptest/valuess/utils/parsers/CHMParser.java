@@ -25,8 +25,9 @@ import java.util.Set;
  * CHMParser - parser a chm file to get plain text
  */
 public class CHMParser extends AbstractParser{
-
-    private static final Set<MediaType> SUPPORTED_TYPES =
+    
+	private static final long serialVersionUID = -7449327136341928055L;
+	private static final Set<MediaType> SUPPORTED_TYPES =
             Collections.unmodifiableSet(new HashSet<MediaType>(Arrays.asList(
                     MediaType.application("vnd.ms-htmlhelp"),
                     MediaType.application("chm"),
@@ -108,7 +109,7 @@ public class CHMParser extends AbstractParser{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ContentHandler handler = new BodyContentHandler();
+        ContentHandler handler = new BodyContentHandler(-1);
         Metadata metadata = new Metadata();
 
         try {

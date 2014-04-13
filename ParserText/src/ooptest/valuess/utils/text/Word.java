@@ -1,29 +1,23 @@
 package ooptest.valuess.utils.text;
 
-import java.util.ArrayList;
-
 /**
  * Created by eleven on 3/28/14.
  */
-public class Word implements Comparable {
+public class Word {
     private String word;
-    private long frequency;
-    private ArrayList<String> nearWord;
+    private long frequency;    
 
     public Word(String aWord) {
-        word = aWord;
-        nearWord = new ArrayList<String>();
+        word = aWord;        
         frequency = 1;
     }
 
-    public void addAWord(String aWord) {
-        if (word.compareTo(aWord) == 0)
-            frequency++;
-        else {
-            frequency++;
-            if (!nearWord.contains(aWord))
-                nearWord.add(aWord);
-        }
+    public void adjust() {        
+        frequency++;        
+    }
+    
+    public int compareTo(String str){
+    	return word.compareTo(str);
     }
 
     public String getWord() {
@@ -37,26 +31,6 @@ public class Word implements Comparable {
     public String toString(){
         return word;
     }
+    
 
-    public String[] getNearWords() {
-        return nearWord.toArray(new String[nearWord.size()]);
-    }
-
-    public boolean checkNearWord(String aWord) {
-        if (word.compareTo(aWord) == 0)
-            return true;
-        if (nearWord.contains(aWord))
-            return true;
-
-        return WordTool.near(this.word, aWord);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        Word w = (Word) o;
-        if (checkNearWord(((Word) o).word))
-            return 1;
-        else
-            return word.compareTo(((Word) o).word);
-    }
 }
