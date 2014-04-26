@@ -8,6 +8,8 @@
  */
 package Sta_word;
 
+import java.util.Vector;
+
 /**
  *
  * @author Bui
@@ -20,14 +22,12 @@ public class StaticTable extends Table{
      public void  Add(String Word, BaseDict Base){
         if (Base.checkAvailable(Word)) {
         String BasicWord= Base.getBasicWordFromDict(Word);
-        if (Base.getTypeofWord(BasicWord)!=0)
         this.increaseCountWord(BasicWord,Word);
         }
     }
      public void  Addi(String Word,int count, BaseDict Base){
         if (Base.checkAvailable(Word)) {
         String BasicWord= Base.getBasicWordFromDict(Word);
-        if (Base.getTypeofWord(BasicWord)!=0)
         this.increaseCountWords(BasicWord,count,Word);
         }
     }
@@ -53,5 +53,15 @@ public class StaticTable extends Table{
             else
                 addData(BasicWord, MaskWord, i);
         }
+    }
+    public Vector getUnsualWord(BaseDict Base){
+        Vector V= new Vector();
+        Vector temp = this.getAllData();
+        for (int i=0;i<temp.size();i++){
+            Vector t = (Vector) temp.get(i);
+            String word = t.get(0).toString();
+            if (Base.getTypeofWord(word)==1) V.add(t);
+        }
+        return V;
     }
 }
