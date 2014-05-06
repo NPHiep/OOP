@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wordanalyzer.GameScreenController">
+<center><GridPane prefHeight="343.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+<RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="263.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+<children><FlowPane prefHeight="204.0" prefWidth="600.0" GridPane.rowIndex="2">
+<children><Button fx:id="answer1_button" alignment="BASELINE_LEFT" maxWidth="-Infinity" mnemonicParsing="false" onAction="#anw1ButtonAction" opacity="0.7" prefWidth="585.0" text="Button" wrapText="true">
+
+<FlowPane.margin>
+<Insets bottom="6.0" left="6.0" />
+</FlowPane.margin>
+<font>
+<Font size="13.0" />
+</font>
+
+
+</Button>
+<Button fx:id="answer2_button" alignment="BASELINE_LEFT" layoutX="16.0" layoutY="10.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#awn2ButtonAction" opacity="0.7" prefWidth="585.0" text="Button" wrapText="true">
+
+<FlowPane.margin>
+<Insets bottom="6.0" left="6.0" />
+</FlowPane.margin>
+<font>
+<Font size="13.0" />
+</font>
+</Button>
+<Button fx:id="answer3_button" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="35.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#awn3ButtonAction" opacity="0.7" prefWidth="585.0" text="Button" wrapText="true">
+
+<FlowPane.margin>
+<Insets bottom="6.0" left="6.0" />
+</FlowPane.margin>
+<font>
+<Font size="13.0" />
+</font>
+</Button>
+<Button fx:id="answer4_button" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="60.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#awn4ButtonAction" opacity="0.7" prefWidth="585.0" text="Button" wrapText="true">
+
+<FlowPane.margin>
+<Insets bottom="6.0" left="6.0" />
+</FlowPane.margin>
+<font>
+<Font size="13.0" />
+</font>
+</Button>
+<Button fx:id="answer5_button" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="85.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#awn5ButtonAction" opacity="0.7" prefWidth="585.0" text="Button" wrapText="true">
+
+<FlowPane.margin>
+<Insets left="6.0" />
+</FlowPane.margin>
+<font>
+<Font size="13.0" />
+</font>
+</Button>
+</children></FlowPane><Text fx:id="question_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="591.13671875" GridPane.rowIndex="1">
+<font>
+<Font name="Segoe UI Light" size="36.0" />
+</font>
+<GridPane.margin>
+<Insets bottom="12.0" />
+</GridPane.margin></Text><Text fx:id="score_text" fill="#1d486f" strokeType="OUTSIDE" strokeWidth="0.0" text="Score: ">
+<GridPane.margin>
+<Insets left="6.0" />
+</GridPane.margin>
+<font>
+<Font size="18.0" />
+</font></Text>
+</children>
+</GridPane>
+</center>
+<top><Pane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<children>
+    <Button fx:id="closebutton" layoutX="570.0" layoutY="17.0" mnemonicParsing="false" onAction="#gameFinish" /><Text layoutX="7.431640625" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the sentence has the word in [.........]">
+<font>
+<Font size="13.0" />
+</font></Text>
+</children></Pane>
+</top>
+ <stylesheets>
+        <URL value="@GameScreen.css" />
+    </stylesheets>
+</BorderPane>
