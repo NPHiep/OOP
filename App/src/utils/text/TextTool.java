@@ -1,10 +1,23 @@
 package utils.text;
 
-import analyzer.BaseDict;
-import analyzer.StaticTable;
+import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.sentdetect.SentenceDetector;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
+import opennlp.tools.util.Span;
+import wordanalyzer.WordAnalyzer;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by eleven on 3/20/14.
@@ -15,222 +28,196 @@ import java.util.Collections;
  */
 public class TextTool {
 
-    private String content = "";
-    private String original;
+    public static final int NAME_LOCATION = 0;
+    public static final int NAME_ORGANIZATION = 1;
+    public static final int NAME_PERSON = 2;
+    private String[] sents = null;
+    private Tokenizer tokenizer;
+    private NameFinderME locationFinder;
+    private NameFinderME organizationFinder;
+    private NameFinderME personFinder;
 
-    public TextTool(String content) {
-        this.original = content;
-        boolean startSentence = true;
-        int i = 0;
+    public TextTool(String content)
+    {
+        int index = -1;
         StringBuilder builder = new StringBuilder();
-        while (i < content.length()) {
-            char c = content.charAt(i);
-            // if a word start by letter -> get word
-            if (Character.isLetterOrDigit(c)) {
-                int start = i;
-                boolean drop = false;
-                if (Character.isDigit(c) || (Character.isUpperCase(c) && !startSentence)) {
-                    drop = true;
-                }
-                do {
-                    i++;
-                    if (i >= content.length()) {
-                        break;
-                    }
-                    c = content.charAt(i);
-                    // if word contains '.' and followed by a not LetterOrDigit char, break
-                    if (c == '.' || c == '-' || c == '\'' || c == '_') {
-                        if (i == (content.length() - 1) || !Character.isLetterOrDigit(content.charAt(i + 1))) {
-                            break;
-                        }
-                    }
-                    // if word contains '_' or digit, drop word
-                    if (c == '_' || c == '.' || Character.isDigit(c)) {
-                        drop = true;
-                    }
-                } while (Character.isLetterOrDigit(c) || c == '.' || c == '\'' || c == '-' || c == '_');
-
-                // if word and with a not letter, drop word
-                if (!Character.isLetter(content.charAt(i - 1))) {
-                    drop = true;
-                }
-
-                if (drop) {
-                    for (int k = start; k < i; k++) {
-                        builder.append(' ');
-                    }
+        while (true){
+            int old = index;
+            index = content.indexOf("\n", index + 1);
+            if (index < 0){
+                builder.append(content.substring(old+1));
+                break;
+            }
+            else {
+                if (index > 2 && content.charAt(index-1) == '-' && Character.isLetter(content.charAt(index-2))){
+                    builder.append(content.substring(old+1, index-1));
                 } else {
-                    builder.append(content.substring(start, i));
+                    builder.append(content.substring(old+1, index)+" ");
                 }
-            } else {
-                if (startSentence) {
-                    startSentence = false;
-                }
-
-                if (c == '.' || c == '?' || c == '!') {
-                    startSentence = true;
-                    builder.append('|');
-                } else if (c == '\n' && (i == content.length() - 1 || Character.isUpperCase(content.charAt(i + 1)))) {
-                    startSentence = true;
-                    builder.append('|');
-                } else {
-                    builder.append(' ');
-                }
-
-                i++;
             }
         }
 
-        this.content = builder.toString().toLowerCase();
+        InputStream is = null;
+
+        try {
+            is = new FileInputStream(WordAnalyzer.class.getResource("data/en-token.bin").getPath());
+            TokenizerModel tokenModel = new TokenizerModel(is);
+            tokenizer = new TokenizerME(tokenModel);
+            is.close();
+
+            is = new FileInputStream(WordAnalyzer.class.getResource("data/en-ner-location.bin").getPath());
+            TokenNameFinderModel nameModel = new TokenNameFinderModel(is);
+            locationFinder = new NameFinderME(nameModel);
+            is.close();
+
+            is = new FileInputStream(WordAnalyzer.class.getResource("data/en-ner-organization.bin").getPath());
+            nameModel = new TokenNameFinderModel(is);
+            organizationFinder = new NameFinderME(nameModel);
+            is.close();
+
+            is = new FileInputStream(WordAnalyzer.class.getResource("data/en-ner-person.bin").getPath());
+            nameModel = new TokenNameFinderModel(is);
+            personFinder = new NameFinderME(nameModel);
+            is.close();
+
+            is = new FileInputStream(WordAnalyzer.class.getResource("data/en-sent.bin").getPath());
+            SentenceModel sentenceModel = new SentenceModel(is);
+            SentenceDetector detector = new SentenceDetectorME(sentenceModel);
+            sents = detector.sentDetect(builder.toString());
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public String getOriginal() {
-        return original;
-    }
     /*
      sau khi file -> list word
      hiện tại đang add vào string list
      */
 
     public void addToDataBase() {
-        StringBuilder builder = new StringBuilder();
-        String tmp = content.replace("|", " ");
-        if (tmp.length() > 0) {
-            builder.append(tmp.charAt(0));
-        }
-        for (int i = 1; i < tmp.length(); i++) {
-            if (tmp.charAt(i - 1) == ' ' && tmp.charAt(i) == ' ') {
-            } else {
-                builder.append(tmp.charAt(i));
+        InputStream is = null;
+        ArrayList<String> nameList = new ArrayList<String>();
+        ArrayList<String> strList = new ArrayList<String>();
+        Pattern pattern = Pattern.compile("[a-zA-Z'-]*[a-zA-Z]");
+            //tokenize
+            long start = System.currentTimeMillis();
+            for (String sent: sents){
+                String[] temp = tokenizer.tokenize(sent);
+                for (String s: temp){
+                    if (pattern.matcher(s).matches()){
+                        if (Character.isUpperCase(s.charAt(0)))
+                            nameList.add(s);
+                        strList.add(s);
+                    }
+                }
             }
+            System.out.println("Tokenize in "+(System.currentTimeMillis()-start));
+
+        System.out.println("First:"+strList.size());
+
+        // remove Name from strList
+        start = System.currentTimeMillis();
+        String[] name = nameList.toArray(new String[nameList.size()]);
+
+        try {
+            strList.removeAll(getNameFinder(NAME_LOCATION, name));
+            strList.removeAll(getNameFinder(NAME_ORGANIZATION, name));
+            strList.removeAll(getNameFinder(NAME_PERSON, name));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        System.out.println("Get Name Finder in "+(System.currentTimeMillis()-start));
 
-        String[] str = builder.toString().split(" ");  // split string into String array
-
-        ArrayList<String> strList = new ArrayList<String>(Arrays.asList(str));
         Collections.sort(strList);						// sort list first        
 
         ArrayList<Word> wordList = new ArrayList<Word>();       // wordlist contains list words in ascending order
         String last = "";
-        
 
         for (int i = 0; i < strList.size(); i++) {
             String word = strList.get(i);
-            if (word.length() < 2) {
-                continue;  // throw word which of length is 1 (contains case common words)
-            }
             if (Character.isLetter(word.charAt(0))) {
                 if (last.compareTo(word) == 0) {
                     wordList.get(wordList.size() - 1).adjust();
                 } else {
                     last = word;
-                    wordList.add(new Word(word));
-                 //  wordanalyzer.WordAnalyzer.keyList.add(word);
+                    wordList.add(new Word(word.toLowerCase()));
                     if (wordList.size() >= 2) {
                         Word tmpWord = wordList.get(wordList.size() - 2);
                        // if(tmpWord.getWord() == "as"){
-                            System.out.println(tmpWord.getWord()+ tmpWord.getFrequency());
+//                            System.out.println(tmpWord.getWord()+ tmpWord.getFrequency());
                         //}
-                        wordanalyzer.WordAnalyzer.staticTable.Addi(tmpWord.getWord(), tmpWord.getFrequency(),wordanalyzer.WordAnalyzer.baseData);
-
+                        WordAnalyzer.staticTable.Addi(tmpWord.getWord(), tmpWord.getFrequency(),WordAnalyzer.baseData);
                     }
                 }
             }
         }
 
+        System.out.println("____"+strList.size());
+
     }
 
-    public String[] getSentence(String word) {
+    private List<String> getNameFinder(int type, String[] source) throws IOException {
+        NameFinderME nameFinder;
+        switch (type) {
+            case NAME_LOCATION:
+                nameFinder = locationFinder;
+                break;
+            case NAME_ORGANIZATION:
+                nameFinder = organizationFinder;
+                break;
+            case NAME_PERSON:
+                nameFinder = personFinder;
+                break;
+            default:
+                return null;
+        }
+        Span[] span = nameFinder.find(source);
+        System.out.println(source.length+"~~~"+span.length);
+        ArrayList<String> array = new ArrayList<String>();
+        for (Span s: span){
+            for (int i = s.getStart(); i < s.getEnd(); i++)
+                if (!array.contains(source[i])) array.add(source[i]);
+        }
+        return array;
+    }
+
+    public String[] getSentence(String word)  {
+        System.out.println("WORD:"+word);
         int index = 0;
         ArrayList<String> sentences = new ArrayList<String>();
         word = word.toLowerCase();
 
-        while (index + word.length() < content.length()) {
-            index = content.indexOf(word, index);
-            if (index == -1) {
-                break;
-            }
-            // No suitable, continue find
-            if ((index != 0 && Character.isLetter(content.charAt(index - 1))) || ((index + word.length() <= content.length() - 1) && Character.isLetter(content.charAt(index + word.length())))) {
-                index++;
-                continue;
-            }
-
-            // suitable, mark sentence
-            int start, end;
-            int countWord = 1;
-            boolean inWord = false;
-            for (start = index - 1; start >= 0; start--) {
-                char c = content.charAt(start);
-                if (c == '|') {
-                    break;
-                } else if (c == ' ') {
-                    if (inWord) {
-                        inWord = false;
+        InputStream is = null;
+        Pattern pattern = Pattern.compile(".*\\b"+word+"\\b([^-/.]+.*)?", Pattern.CASE_INSENSITIVE);
+        Pattern subPattern = Pattern.compile(".*[^a-zA-Z0-9'-\\.,()\\[\\]{}\"].*");
+        TokenizerME tokenizer = null;
+        try{
+            is = new FileInputStream(WordAnalyzer.class.getResource(("data/en-token.bin")).getPath());
+            TokenizerModel model = new TokenizerModel(is);
+            tokenizer = new TokenizerME(model);
+        } catch (IOException e){}
+        for (String s: sents){
+            if (s.length() <= 300){ // too long is dangerous
+            if (pattern.matcher(s).matches()){
+                String[] words = tokenizer.tokenize(s);
+                boolean checkAbility = true;
+                for (String w: words){
+                    if (subPattern.matcher(w).matches()){
+                        checkAbility = false;
+                    } else if (w.matches("[a-zA-Z'-]+")){
+                        checkAbility = WordAnalyzer.baseData.checkAvailable(w.toLowerCase());
                     }
-                } else {
-                    if (!inWord) {
-                        countWord++;
-                        inWord = true;
-                    }
+                    if (!checkAbility) break;
                 }
+                if (checkAbility)
+                    sentences.add(s);
             }
-            start++;
-            for (end = index + word.length(); end < content.length(); end++) {
-                char c = content.charAt(end);
-                if (c == '|') {
-                    break;
-                } else if (c == ' ') {
-                    if (inWord) {
-                        inWord = false;
-                    }
-                } else {
-                    if (!inWord) {
-                        countWord++;
-                        inWord = true;
-                    }
-                }
             }
-            String sentence = trimString(original.substring(start, end));
-            // drop sentence which have only 1 word
-            if (countWord >= 2) {
-                sentences.add(sentence);
-            }
-            index = end + 1;
         }
 
         return sentences.toArray(new String[sentences.size()]);
-    }
-
-    private String trimString(String str) {
-        int start, end;
-
-        StringBuilder builder = new StringBuilder();
-        for (int index = 0; index < str.length(); index++) {
-            char c = str.charAt(index);
-            if (c == '\n') {
-                if (index == 0 || Character.isLetterOrDigit(str.charAt(index - 1))) {
-                    builder.append(' ');
-                }
-            } else {
-                builder.append(c);
-            }
-        }
-
-        str = builder.toString();
-        System.out.println("Before:" + str);
-        for (start = 0; start < str.length(); start++) {
-            if (Character.isLetterOrDigit(str.charAt(start))) {
-                break;
-            }
-        }
-        for (end = str.length() - 1; start < end; end--) {
-            if (Character.isLetterOrDigit(str.charAt(end))) {
-                break;
-            }
-        }
-
-        return str.substring(start, end + 1);
     }
 
 }

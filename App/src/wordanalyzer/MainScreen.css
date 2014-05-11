@@ -10,11 +10,11 @@ and open the template in the editor.
 
 root { 
     display: block;
-    
 }
-.root {
-    -fx-background-image: url("/imgs/background.jpg");
-}
+
+/*.root {*/
+    /*-fx-background-image: url("../imgs/background.jpg");*/
+/*}*/
 
 .label {
     -fx-font-size: 12px;
@@ -40,12 +40,12 @@ root {
     -fx-background-color: transparent;  
     -fx-background-repeat: no-repeat;   
     -fx-background-size: 50px 50px;
-    -fx-background-image:url("parse.png");
+    -fx-background-image:url("../imgs/parse.png");
     
 
 }
 #parse-btn:hover {
-    -fx-background-image:url("sparse.png");
+    -fx-background-image:url("../imgs/sparse.png");
 }
 
 
@@ -53,37 +53,27 @@ root {
      -fx-background-color: transparent;  
     -fx-background-repeat: no-repeat;   
     -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/close.png");
+    -fx-background-image:url("../imgs/close.png");
 }
-#closebutton:hover{
-     -fx-background-color: greenyellow;  
-    -fx-background-repeat: no-repeat;   
-    -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/close.png");
-}
+
 
 #minibutton{
-     -fx-background-color: transparent;  
-    -fx-background-repeat: no-repeat;   
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
     -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/mini.png");
-}
-#minibutton:hover{
-     -fx-background-color: greenyellow;  
-    -fx-background-repeat: no-repeat;   
-    -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/mini.png");
+    -fx-background-image:url("../imgs/mini.png");
 }
 
-#openbutton{
-     -fx-background-color: transparent;  
-    -fx-background-repeat: no-repeat;   
-    -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/open.png");
-}
+/*#openbutton{*/
+     /*-fx-background-color: transparent;  */
+    /*-fx-background-repeat: no-repeat;   */
+    /*-fx-background-size: 20px 20px;*/
+    /*-fx-background-image:url("/imgs/open.png");*/
+/*}*/
 #openbutton:hover{
-     -fx-background-color: greenyellow;  
-    -fx-background-repeat: no-repeat;   
-    -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/open.png");
+     -fx-background-color: greenyellow;
+}
+
+.clickable:hover{
+    -fx-cursor: hand;
 }

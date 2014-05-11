@@ -3,10 +3,11 @@
  */
 package analyzer;
 
+import utils.WordItem;
+
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
-import utils.WordItem;
 
 /**
  *
@@ -67,7 +68,9 @@ public class Table {
     
     public void getListViewData(){
         wordanalyzer.WordAnalyzer.data.clear();
+        System.out.println(wordanalyzer.WordAnalyzer.data.size());
         for (String i : this.db.keySet()){
+//            System.out.println(">>>>")
             WordItem wItem = new WordItem(this.getWord(i), this.getNum(i));
             wordanalyzer.WordAnalyzer.data.add(wItem);
         }

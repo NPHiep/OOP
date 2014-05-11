@@ -5,10 +5,6 @@
  */
 package wordanalyzer;
 
-import java.net.URL;
-import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.Vector;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +20,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import utils.HighScoreItem;
-import utils.WordItem;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -49,8 +49,9 @@ public class GameScreenController implements Initializable {
     private Text score_text;
     @FXML
     private Button closebutton;
-    int unsualCount = WordAnalyzer.unsualKeyList.size();
-    int[] flag = new int[unsualCount];
+
+    ArrayList<String> unusedList = new ArrayList<String>(WordAnalyzer.unsualKeyList);
+    ArrayList<String> sentenceList = new ArrayList<String>();
     int currentPoint = 0;
     String newWord;
     int trueAnwser = 0;
@@ -106,32 +107,30 @@ public class GameScreenController implements Initializable {
     }
 
     private void initGame() {
-        for (int i = 0; i < unsualCount; i++) {
-            flag[i] = i;
-        }
-        Random rd = new Random();
-        for (int i = 0; i < unsualCount; i++) {
-            int k = rd.nextInt(unsualCount);
-            int tmp = flag[i];
-            flag[i] = flag[k];
-            flag[k] = tmp;
-        }
-        //question_text.setText(WordAnalyzer.data.get(flag[0]).getWord());
         nextQuestion();
     }
 
     private void nextQuestion() {
+        // init
         Random rd = new Random();
         trueAnwser = rd.nextInt(5) + 1;
-        if (currentPoint < unsualCount) {
-            newWord = WordAnalyzer.unsualKeyList.get(flag[currentPoint]);
+        sentenceList = new ArrayList<String>();
+
+        if (unusedList.size() > 0) {
+            String[] sentences = null;
+            do {
+                newWord = unusedList.get(rd.nextInt(unusedList.size()));
+                sentences = WordAnalyzer.text.getSentence(newWord);
+                if (sentences != null && sentences.length > 0) break;
+            } while(true);
+            unusedList.remove(newWord);
             question_text.setText(newWord);
             score_text.setText("Score: " + currentPoint);
             currentPoint++;
+            MakeRandom(trueAnwser, newWord, sentences[0]);
         } else {
             gameFinish();
         }
-        MakeRandom(trueAnwser, newWord);
     }
 
     public void gameFinish() {
@@ -147,9 +146,9 @@ public class GameScreenController implements Initializable {
                 newName = "Someone";
             }
             int index = 0;
-            while (currentPoint < WordAnalyzer.hiscoreData.get(index).getScore() && index < WordAnalyzer.hiscoreData.size()) {
-                index++;
-            }
+                while (index < WordAnalyzer.hiscoreData.size() && currentPoint < WordAnalyzer.hiscoreData.get(index).getScore()) {
+                    index++;
+                }
             WordAnalyzer.hiscoreData.add(index, new HighScoreItem(newName, currentPoint));
             if (WordAnalyzer.hiscoreData.size() == 8) {
                 WordAnalyzer.hiscoreData.remove(7);
@@ -161,70 +160,52 @@ public class GameScreenController implements Initializable {
 
     }
 
-    private void MakeRandom(int correctAnswer, String newWord) {
-        System.out.println(""+newWord);
-        String sentence = WordAnalyzer.text.getSentence(newWord)[0];
-        sentence = sentence.toLowerCase();
-        sentence = sentence.replaceFirst(newWord, "[........]");
+    private void MakeRandom(int correctAnswer, String newWord, String rightSentence) {
+        System.out.println("Answer:"+correctAnswer);
+        sentenceList.add(0,rightSentence);
+        rightSentence = replaceWordInSenetece(rightSentence, newWord);
 
-        switch (correctAnswer) {
-            case 1:
-                answer1_button.setText(sentence);
-                answer2_button.setText(wrongSentence(currentPoint, 1));
-                answer3_button.setText(wrongSentence(currentPoint, 2));
-                answer4_button.setText(wrongSentence(currentPoint, 3));
-                answer5_button.setText(wrongSentence(currentPoint, 4));
-                break;
-            case 2:
-                answer2_button.setText(sentence);
-                answer1_button.setText(wrongSentence(currentPoint, 1));
-                answer3_button.setText(wrongSentence(currentPoint, 2));
-                answer4_button.setText(wrongSentence(currentPoint, 3));
-                answer5_button.setText(wrongSentence(currentPoint, 4));
-
-                break;
-            case 3:
-                answer3_button.setText(sentence);
-                answer2_button.setText(wrongSentence(currentPoint, 1));
-                answer1_button.setText(wrongSentence(currentPoint, 2));
-                answer4_button.setText(wrongSentence(currentPoint, 3));
-                answer5_button.setText(wrongSentence(currentPoint, 4));
-
-                break;
-            case 4:
-                answer4_button.setText(sentence);
-                answer2_button.setText(wrongSentence(currentPoint, 1));
-                answer3_button.setText(wrongSentence(currentPoint, 2));
-                answer1_button.setText(wrongSentence(currentPoint, 3));
-                answer5_button.setText(wrongSentence(currentPoint, 4));
-
-                break;
-            case 5:
-                answer5_button.setText(sentence);
-                answer2_button.setText(wrongSentence(currentPoint, 1));
-                answer3_button.setText(wrongSentence(currentPoint, 2));
-                answer4_button.setText(wrongSentence(currentPoint, 3));
-                answer1_button.setText(wrongSentence(currentPoint, 4));
-
-                break;
-            default:
+        // create wrong scentence
+        ArrayList<String> sents = new ArrayList<String>();
+        for (int i = 0; i < 4; i++){
+            sents.add(i,wrongSentence());
         }
+        sents.add(correctAnswer-1, rightSentence);
 
+        answer1_button.setText(sents.get(0));
+        answer2_button.setText(sents.get(1));
+        answer3_button.setText(sents.get(2));
+        answer4_button.setText(sents.get(3));
+        answer5_button.setText(sents.get(4));
     }
 
-    private String wrongSentence(int index, int distance) {
-        String sentence;
-        int trueIndex = flag[index];
-        if ((trueIndex + distance) >= unsualCount) {
-            trueIndex = Math.abs(trueIndex - distance);
-        } else {
-            trueIndex += distance;
-        }
-        String fakeWord = WordAnalyzer.unsualKeyList.get(trueIndex);
-        sentence = WordAnalyzer.text.getSentence(fakeWord)[0];
-        sentence = sentence.toLowerCase();
-        fakeWord = fakeWord.toLowerCase();
-        return sentence.replace(fakeWord, "[.........]");
+    private String replaceWordInSenetece(String sentence, String word) {
+        return sentence.replaceFirst(word,"[.........]");
+    }
+
+    private String wrongSentence() {
+        Random rd = new Random();
+        String fakeWord = "";
+        do {
+            int index = rd.nextInt(WordAnalyzer.unsualKeyList.size());
+            fakeWord = WordAnalyzer.unsualKeyList.get(index);
+            if (fakeWord.compareTo(newWord) == 0) continue;
+            String[] sentences = WordAnalyzer.text.getSentence(fakeWord);
+            if (sentences != null && sentences.length > 0){
+                // check if wrong sentence is same as true sentence
+                for (String sentenceToCheck: sentences){
+                    boolean check = true;
+                    for (String s: sentenceList)
+                    if (sentenceToCheck.compareTo(s) == 0){
+                        check = false;
+                    }
+                    if (check){
+                        sentenceList.add(sentenceToCheck);
+                        return replaceWordInSenetece(sentenceToCheck, fakeWord);
+                    }
+                }
+            }
+        } while (true);
     }
 
     private boolean isHighScore(int score) {

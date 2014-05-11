@@ -12,9 +12,9 @@ root {
     display: block;
     
 }
-.root {
-    -fx-background-image: url("/imgs/background.jpg");
-}
+/*.root {*/
+    /*-fx-background-image: url("/imgs/background.jpg");*/
+/*}*/
 
 .label {
     -fx-font-size: 12px;
@@ -40,11 +40,11 @@ root {
      -fx-background-color: transparent;  
     -fx-background-repeat: no-repeat;   
     -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/close.png");
+    -fx-background-image:url("../imgs/close.png");
 }
-#closebutton:hover{
-     -fx-background-color: greenyellow;  
-    -fx-background-repeat: no-repeat;   
-    -fx-background-size: 20px 20px;
-    -fx-background-image:url("/imgs/close.png");
-}
+/*#closebutton:hover{*/
+     /*-fx-background-color: greenyellow;  */
+    /*-fx-background-repeat: no-repeat;   */
+    /*-fx-background-size: 20px 20px;*/
+    /*-fx-background-image:url("/imgs/close.png");*/
+/*}*/

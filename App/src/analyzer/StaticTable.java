@@ -67,7 +67,7 @@ public class StaticTable extends Table {
         Vector temp = this.getAllData();
         for (int i=0;i<temp.size();i++){
             Vector t = (Vector) temp.get(i);
-            String word = t.get(0).toString();
+            String word = t.get(1).toString();
             if (Base.getTypeofWord(word)==1) tmp.add(word);
         }
        return tmp;
