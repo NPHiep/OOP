@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author PhiHiep
  */
-public class WordItem {
+public class WordItem{
     private final SimpleStringProperty Word;
     private final SimpleIntegerProperty Count;
  
@@ -21,7 +21,7 @@ public class WordItem {
         this.Word = new SimpleStringProperty(word);
         this.Count = new SimpleIntegerProperty(count);
     }
- 
+
     public String getWord() {
         return Word.get();
     }
@@ -34,5 +34,6 @@ public class WordItem {
     }
     public void setCount(int count) {
         Count.set(count);
-    }    
+    }
+
 }

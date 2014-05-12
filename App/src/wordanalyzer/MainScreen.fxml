@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wordanalyzer.MainScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wordanalyzer.MainScreenController">
 <center>
     <GridPane BorderPane.alignment="CENTER">
   <columnConstraints>
@@ -74,4 +74,6 @@
  <stylesheets>
         <URL value="@MainScreen.css" />
     </stylesheets>
+<bottom><AnchorPane fx:id="root" prefHeight="0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+</bottom>
 </BorderPane>

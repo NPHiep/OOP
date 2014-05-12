@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wordanalyzer.GameScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wordanalyzer.GameScreenController">
 <center><GridPane prefHeight="343.0" prefWidth="600.0" BorderPane.alignment="CENTER">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -17,7 +17,7 @@
     <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="263.0" vgrow="SOMETIMES" />
   </rowConstraints>
-<children><FlowPane prefHeight="204.0" prefWidth="600.0" GridPane.rowIndex="2">
+<children><FlowPane prefHeight="297.0" prefWidth="600.0" GridPane.rowIndex="2">
 <children><Button fx:id="answer1_button" alignment="BASELINE_LEFT" maxWidth="-Infinity" mnemonicParsing="false" onAction="#anw1ButtonAction" opacity="0.7" prefWidth="585.0" text="Button" wrapText="true">
 
 <FlowPane.margin>
@@ -81,9 +81,9 @@
 </children>
 </GridPane>
 </center>
-<top><Pane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<top><Pane prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
 <children>
-    <Button fx:id="closebutton" layoutX="570.0" layoutY="17.0" mnemonicParsing="false" onAction="#gameFinish" /><Text layoutX="7.431640625" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the sentence has the word in [.........]">
+    <Button fx:id="closebutton" layoutX="568.0" layoutY="17.0" mnemonicParsing="false" onAction="#gameFinish" prefHeight="25.0" prefWidth="20.0" /><Text layoutX="7.431640625" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the sentence has the word in [.........]">
 <font>
 <Font size="13.0" />
 </font></Text>

@@ -142,16 +142,16 @@ public class GameScreenController implements Initializable {
                     MainScreenController.gameStage
             );
             String newName = prompt.getResult();
-            if (newName == "") {
-                newName = "Someone";
+            if (newName.compareTo("") == 0) {
+                newName = "Noname";
             }
             int index = 0;
                 while (index < WordAnalyzer.hiscoreData.size() && currentPoint < WordAnalyzer.hiscoreData.get(index).getScore()) {
                     index++;
                 }
             WordAnalyzer.hiscoreData.add(index, new HighScoreItem(newName, currentPoint));
-            if (WordAnalyzer.hiscoreData.size() == 8) {
-                WordAnalyzer.hiscoreData.remove(7);
+            if (WordAnalyzer.hiscoreData.size() == 9) {
+                WordAnalyzer.hiscoreData.remove(8);
             }
         }
         //close game scene and return to main scene
@@ -180,7 +180,10 @@ public class GameScreenController implements Initializable {
     }
 
     private String replaceWordInSenetece(String sentence, String word) {
-        return sentence.replaceFirst(word,"[.........]");
+        String s = sentence.toLowerCase().replaceFirst("\\b"+word+"\\b","[&]");
+        int index = s.indexOf("[&]");
+        return sentence.substring(0, index)+"[.........]"+sentence.substring(index+word.length());
+
     }
 
     private String wrongSentence() {
@@ -209,7 +212,7 @@ public class GameScreenController implements Initializable {
     }
 
     private boolean isHighScore(int score) {
-        if (WordAnalyzer.hiscoreData.size() < 7) {
+        if (WordAnalyzer.hiscoreData.size() < 8) {
             return true;
         }
         int index = WordAnalyzer.hiscoreData.size() - 1;

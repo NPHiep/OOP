@@ -130,11 +130,14 @@ public class TextTool {
         }
         System.out.println("Get Name Finder in "+(System.currentTimeMillis()-start));
 
-        Collections.sort(strList);						// sort list first        
+        start = System.currentTimeMillis();
+        Collections.sort(strList);						// sort list first
+        System.out.println("Sorted in: "+ (System.currentTimeMillis() - start ));
 
         ArrayList<Word> wordList = new ArrayList<Word>();       // wordlist contains list words in ascending order
         String last = "";
 
+        start = System.currentTimeMillis();
         for (int i = 0; i < strList.size(); i++) {
             String word = strList.get(i);
             if (Character.isLetter(word.charAt(0))) {
@@ -153,8 +156,7 @@ public class TextTool {
                 }
             }
         }
-
-        System.out.println("____"+strList.size());
+        System.out.println("Add to dict in: "+ (System.currentTimeMillis()-start ));
 
     }
 

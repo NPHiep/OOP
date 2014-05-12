@@ -28,37 +28,37 @@ public class StaticTable extends Table {
     }
      public void  Addi(String Word,int count, BaseDict Base){
         if (Base.checkAvailable(Word)) {
-        String BasicWord = Base.getBasicWordFromDict(Word);
-        this.increaseCountWords(BasicWord,count,Word);
+            String BasicWord = Base.getBasicWordFromDict(Word);
+            this.increaseCountWords(BasicWord,count,Word);
         }
     }
 
     private void increaseCountWords(String BasicWord, int count, String MaskedWord) {
         if (!this.checkAvailable(BasicWord)) {
-            addData(BasicWord, MaskedWord, count);
+            addData(BasicWord, MaskedWord, count, MaskedWord);
         } else {
             int i = getNum(BasicWord);
             String MaskWord = getWord(BasicWord);
             i = i + count;
             if (MaskWord.length() > MaskedWord.length()) {
-                addData(BasicWord, MaskedWord, i);
+                addData(BasicWord, MaskedWord, i, MaskedWord);
             } else {
-                addData(BasicWord, MaskWord, i);
+                addData(BasicWord, MaskWord, i, MaskedWord);
             }
         }
     }
 
     private void increaseCountWord(String BasicWord, String MaskedWord) {
         if (!this.checkAvailable(BasicWord)) {
-            addData(BasicWord, MaskedWord, 1);
+            addData(BasicWord, MaskedWord, 1, MaskedWord);
         } else {
             int i = getNum(BasicWord);
             String MaskWord = getWord(BasicWord);
             i++;
             if (MaskWord.length() > MaskedWord.length()) {
-                addData(BasicWord, MaskedWord, i);
+                addData(BasicWord, MaskedWord, i, MaskedWord);
             } else {
-                addData(BasicWord, MaskWord, i);
+                addData(BasicWord, MaskWord, i, MaskedWord);
             }
         }
     }

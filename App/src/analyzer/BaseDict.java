@@ -45,7 +45,6 @@ public class BaseDict extends Table {
                     }
                 }
             } catch (IOException ex) {
-
             }
             
             try {
@@ -62,8 +61,8 @@ public class BaseDict extends Table {
     }
 }
 
-public void addAWordIntoDict(String Word, String BasicWord, int type) {
-        addData(Word, BasicWord, type);
+    public void addAWordIntoDict(String Word, String BasicWord, int type) {
+        addData(Word, BasicWord, type, null);
     }
 
     public String getBasicWordFromDict(String Word) {

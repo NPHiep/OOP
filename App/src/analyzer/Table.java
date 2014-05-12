@@ -5,9 +5,7 @@ package analyzer;
 
 import utils.WordItem;
 
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Vector;
+import java.util.*;
 
 /**
  *
@@ -19,13 +17,17 @@ public class Table {
     public Table(){
         this.db = new TreeMap<String,Vector>();
     }
-    
-    protected void addData(String K, String Word, int num){
-        Vector V = new Vector();
-        V.add(0,Word);
-        V.add(1,num);
-        if (this.checkAvailable(K)) this.db.remove(K);
-            this.db.put(K, V);
+
+    protected void addData(String K, String Word, int num, String moreWord){
+        Vector<Object> V = new Vector<Object>();
+        V.addElement(Word);
+        V.addElement(num);
+        if (moreWord != null){
+            List<String> more = getMoreWord(K);
+            if (!more.contains(moreWord)) more.add(moreWord);
+            V.addElement(more);
+        }
+        this.db.put(K, V);
     }
     
     public boolean checkAvailable(String K){
@@ -43,6 +45,18 @@ public class Table {
             Word = V.get(0).toString();
         }
         return Word;
+    }
+
+    public List<String> getMoreWord(String K){
+        if (checkAvailable(K)){
+            Vector V = (Vector)this.db.get(K);
+            if (V.capacity() > 2) {
+                Object obj = V.elementAt(2);
+                return (List<String>)V.elementAt(2);
+            }
+            else return new ArrayList<String>();
+        }
+        return new ArrayList<String>();
     }
     
     protected int getNum(String K){
@@ -68,9 +82,7 @@ public class Table {
     
     public void getListViewData(){
         wordanalyzer.WordAnalyzer.data.clear();
-        System.out.println(wordanalyzer.WordAnalyzer.data.size());
         for (String i : this.db.keySet()){
-//            System.out.println(">>>>")
             WordItem wItem = new WordItem(this.getWord(i), this.getNum(i));
             wordanalyzer.WordAnalyzer.data.add(wItem);
         }

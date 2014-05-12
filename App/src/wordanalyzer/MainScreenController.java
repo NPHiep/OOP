@@ -5,6 +5,8 @@
  */
 package wordanalyzer;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,24 +22,24 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.pdf.PDFParser;
 import org.apache.tika.sax.BodyContentHandler;
+import org.controlsfx.control.NotificationPane;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import utils.HighScoreItem;
@@ -46,6 +49,7 @@ import utils.text.TextTool;
 
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -72,10 +76,14 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button minibutton;
     @FXML private Button openbutton;
+    @FXML private AnchorPane root;
+    NotificationPane noti;
     private String file = "";
+    private Tooltip tooltip = new Tooltip();
 
     @FXML
     private void handleOpenButtonAction(ActionEvent event) {
+
         final FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(WordAnalyzer.mainStage);
         if (file != null) {
@@ -91,7 +99,7 @@ public class MainScreenController implements Initializable {
             //Save new leader board table
             writeScoreBoard("score.dat", WordAnalyzer.hiscoreData);
         } catch (IOException ex) {
-            System.err.println("Không ghi được file thống kê điểm");
+            System.err.println("Cant write file");
         }
         // do what you have to do
         stage.close();
@@ -136,7 +144,30 @@ public class MainScreenController implements Initializable {
     TableColumn scoreCol = new TableColumn("Score");
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle rb) {
+        noti = new NotificationPane();
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setMinWidth(600);
+        anchorPane.setPrefWidth(600);
+        noti.setContent(anchorPane);
+        noti.setShowFromTop(false);
+        noti.setOnShown(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(4), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        if (noti.isShowing()){
+                            noti.hide();
+                        }
+                    }
+                }));
+                timeline.play();
+            }
+        });
+        root.getChildren().add(noti);
+    }
 
     public void init(){
         searchtextfield.textProperty().addListener(new ChangeListener<String>() {
@@ -202,6 +233,29 @@ public class MainScreenController implements Initializable {
                 new PropertyValueFactory<WordItem, String>("Count")
         );
         table.getColumns().addAll(wordCol, countCol);
+        table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldVal, Object newVal) {
+                if (newVal == null) return;
+                final WordItem item = (WordItem)newVal;
+                StringBuilder builder = new StringBuilder();
+                builder.append("Word: "+item.getWord()+"\n");
+                builder.append("Frequency: "+item.getCount()+" time(s)\n");
+                String key = WordAnalyzer.baseData.getBasicWordFromDict(item.getWord());
+                builder.append("Base word: "+key);
+                List<String> words = WordAnalyzer.staticTable.getMoreWord(key);
+                if (words.size() > 1)
+                    builder.append("\nNear words:\n");
+                for (String s: words){
+                    if (s.compareTo(item.getWord()) != 0){
+                        builder.append(" - "+s+"\n");
+                    }
+                }
+                tooltip.setText(builder.toString());
+                tooltip.setAutoHide(true);
+                tooltip.show(table, table.getScene().getWindow().getX() + table.getScene().getWidth(), table.getScene().getWindow().getY()+table.getScene().getHeight()/3);
+            }
+        });
         //leader board table init data
         nameCol.setCellValueFactory(new PropertyValueFactory<HighScoreItem, String>("Name"));
         scoreCol.setCellValueFactory(new PropertyValueFactory<HighScoreItem, String>("Score"));
@@ -290,23 +344,35 @@ public class MainScreenController implements Initializable {
                     //add words to table
                     WordAnalyzer.staticTable.getListViewData();
 
-                    updateProgress(1, 1);
+                    if (table.getItems() != WordAnalyzer.data)
+                        table.setItems(WordAnalyzer.data);
                     WordAnalyzer.unsualKeyList = WordAnalyzer.staticTable.getUnsualWord(WordAnalyzer.baseData);
 
                     updateMessage("Finish!");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            noti.setText("Analyze successfull! Got "+WordAnalyzer.data.size()+" words.");
+                            if (noti.isShowing()){
+                                noti.hide();
+                                noti.show();
+                            } else {
+                                noti.show();
+                            }
 
+                        }
+                    });
                 }
 
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        if (table.getItems() != WordAnalyzer.data)
-                            table.setItems(WordAnalyzer.data);
                         openbutton.setDisable(false);
                         gamebutton.setDisable(false);
                         searchtextfield.setDisable(false);
                         filepath.setDisable(false);
                         table.setDisable(false);
+
                     }
                 });
 
