@@ -1,0 +1,33 @@
+.root{
+    -fx-background-color: #DCDCDC;
+    -fx-border-color: azure;
+}
+
+.text-header {
+    -fx-font-size: 20px;
+    -fx-font-family: monospace;
+    -fx-font-weight: bold;
+}
+
+#medal-img {
+    -fx-background-size: 50px 50px;
+    -fx-cell-size: 50px 50px;
+}
+
+.dialog-head {
+    -fx-background-color: aqua;
+}
+
+.button{
+    -fx-background-radius: 5px;
+    -fx-background-color: azure;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+    -fx-background-color: aquamarine;
+}
+
+.button:pressed{
+    -fx-background-color: aqua;
+}

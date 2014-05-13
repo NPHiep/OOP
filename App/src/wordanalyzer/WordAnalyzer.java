@@ -6,7 +6,6 @@ package wordanalyzer;
 import analyzer.BaseDict;
 import analyzer.StaticTable;
 import javafx.application.Application;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +19,6 @@ import utils.text.TextTool;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -33,14 +31,13 @@ public class WordAnalyzer extends Application {
     public static BaseDict baseData = new BaseDict();
     public static StaticTable staticTable = new StaticTable();
     public static final ObservableList<WordItem> data = FXCollections.observableArrayList();
-    public static SimpleDoubleProperty progressValue = new SimpleDoubleProperty();
     public static TextTool text;
     public static Stage mainStage;
-    public static List<WordItem> unsualWordList = new ArrayList<WordItem>();
     public static final ObservableList<HighScoreItem> hiscoreData = FXCollections.observableArrayList();
 
     @Override
     public void start(Stage stage) throws Exception {
+
         this.mainStage = stage;
         stage.initStyle(StageStyle.UNDECORATED);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
@@ -48,7 +45,7 @@ public class WordAnalyzer extends Application {
         MainScreenController main = loader.getController();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        main.init();
+        main.init(stage);
         stage.show();
 
         //load hiscore table

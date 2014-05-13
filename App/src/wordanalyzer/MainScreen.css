@@ -8,8 +8,10 @@ and open the template in the editor.
     Author     : PhiHiep
 */
 
-root { 
+.root {
     display: block;
+    -fx-border-color: #818181;
+    -fx-background-color: #DCDCDC;
 }
 
 /*.root {*/
@@ -27,30 +29,12 @@ root {
     -fx-font-size: 32px;
     -fx-font-family: "Arial Black";
     -fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
 }
-#actionhover {
-    -fx-fill: FIREBRICK;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );  
-}
-
-
-#parse-btn {
-    -fx-background-color: transparent;  
-    -fx-background-repeat: no-repeat;   
-    -fx-background-size: 50px 50px;
-    -fx-background-image:url("../imgs/parse.png");
-    
-
-}
-#parse-btn:hover {
-    -fx-background-image:url("../imgs/sparse.png");
-}
-
 
 #closebutton{
-     -fx-background-color: transparent;  
+    -fx-background-color: transparent;
+    -fx-background-position: center;
     -fx-background-repeat: no-repeat;   
     -fx-background-size: 20px 20px;
     -fx-background-image:url("../imgs/close.png");
@@ -59,21 +43,66 @@ root {
 
 #minibutton{
     -fx-background-color: transparent;
+    -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: 20px 20px;
     -fx-background-image:url("../imgs/mini.png");
 }
 
-/*#openbutton{*/
-     /*-fx-background-color: transparent;  */
-    /*-fx-background-repeat: no-repeat;   */
-    /*-fx-background-size: 20px 20px;*/
-    /*-fx-background-image:url("/imgs/open.png");*/
-/*}*/
-#openbutton:hover{
-     -fx-background-color: greenyellow;
+#tutorialbutton{
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px 20px;
+    -fx-background-image:url("../imgs/tutorial.png");
+}
+
+#gamebutton, #openbutton{
+    -fx-background-radius: 5px;
+}
+
+#gamebutton:hover, #openbutton:hover{
+    -fx-cursor: hand;
+    -fx-background-color:aquamarine;
+}
+
+#gamebutton:pressed, #openbutton:pressed{
+    -fx-background-color: aqua;
 }
 
 .clickable:hover{
     -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+/**
+NotificationPane
+*/
+.notification-pane .notification-bar > .pane {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-color: aquamarine;
+    -fx-padding: 0 7 0 7;
+}
+
+.notification-pane.alert .notification-bar > .pane {
+    -fx-background-color: #ff4600;
+}
+
+.notification-pane.explain .notification-bar > .pane {
+    -fx-background-color: #3eff17;
+}
+
+.notification-pane.top .notification-bar > .pane {
+    -fx-background-insets: 0 0 0 0, 0 0 1 0, 0 0 2 0;
+}
+
+.notification-pane.bottom .notification-bar > .pane {
+    -fx-background-insets: 0 0 0 0, 1 0 0 0, 2 0 0 0;
+}
+
+.notification-pane .notification-bar > .pane .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: lighter;
+    -fx-font-family: monospace;
+    -fx-text-fill: #333333;
 }

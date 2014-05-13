@@ -148,9 +148,6 @@ public class TextTool {
                     wordList.add(new Word(word.toLowerCase()));
                     if (wordList.size() >= 2) {
                         Word tmpWord = wordList.get(wordList.size() - 2);
-                       // if(tmpWord.getWord() == "as"){
-//                            System.out.println(tmpWord.getWord()+ tmpWord.getFrequency());
-                        //}
                         WordAnalyzer.staticTable.Addi(tmpWord.getWord(), tmpWord.getFrequency(),WordAnalyzer.baseData);
                     }
                 }

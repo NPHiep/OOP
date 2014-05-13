@@ -5,21 +5,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.controlsfx.control.NotificationPane;
 
 /**
  * Created by eleven on 5/7/14.
  */
-public class Test{
+public class Test extends Application{
 //    NotificationPane notification;
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(Test.class.getResource("temp.fxml"));
-//        Parent root = loader.load();
-//        Scene scene = new Scene(root, 600, 600);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(Test.class.getResource("../utils/Dialog.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600, 600);
+        stage.setScene(scene);
+        stage.show();
+    }
 //    public static void main(String[] args) throws IOException {
 //        String sample = "As soon as you find that sequence in a decrypted block, you know that you'd found the correct decryption key.";
 //        InputStream is = new FileInputStream(Test.class.getResource("data/en-token.bin").getPath());

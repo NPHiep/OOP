@@ -81,7 +81,6 @@ public class Table {
     }
     
     public void getListViewData(){
-        wordanalyzer.WordAnalyzer.data.clear();
         for (String i : this.db.keySet()){
             WordItem wItem = new WordItem(this.getWord(i), this.getNum(i));
             wordanalyzer.WordAnalyzer.data.add(wItem);

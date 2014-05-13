@@ -8,13 +8,9 @@ and open the template in the editor.
     Author     : PhiHiep
 */
 
-root { 
+.root {
     display: block;
-    
 }
-/*.root {*/
-    /*-fx-background-image: url("/imgs/background.jpg");*/
-/*}*/
 
 .label {
     -fx-font-size: 12px;
@@ -23,28 +19,27 @@ root {
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
 
-#welcome-text {
-    -fx-font-size: 32px;
-    -fx-font-family: "Arial Black";
-    -fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
-}
-#actiontarget {
-    -fx-fill: FIREBRICK;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );  
+.root{
+    display:block;
+    -fx-border-color: #818181;
+    -fx-background-color: #DCDCDC;
 }
 
+#main-pane .button:hover, .button:focused{
+    -fx-background-color: aquamarine;
+}
+
+#main-pane .button{
+    -fx-background-color: azure;
+}
+
+#main-pane .button:pressed{
+    -fx-background-color: aqua;
+}
 
 #closebutton{
-     -fx-background-color: transparent;  
+    -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;   
     -fx-background-size: 20px 20px;
     -fx-background-image:url("../imgs/close.png");
 }
-/*#closebutton:hover{*/
-     /*-fx-background-color: greenyellow;  */
-    /*-fx-background-repeat: no-repeat;   */
-    /*-fx-background-size: 20px 20px;*/
-    /*-fx-background-image:url("/imgs/close.png");*/
-/*}*/

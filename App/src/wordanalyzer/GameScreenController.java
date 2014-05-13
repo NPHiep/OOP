@@ -5,21 +5,29 @@
  */
 package wordanalyzer;
 
+import javafx.animation.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
+import javafx.util.Duration;
+import utils.Controller;
 import utils.HighScoreItem;
+import utils.ScoreDialogController;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,7 +39,7 @@ import java.util.ResourceBundle;
  *
  * @author PhiHiep
  */
-public class GameScreenController implements Initializable {
+public class GameScreenController extends Controller {
 
     @FXML
     private Button answer1_button;
@@ -48,141 +56,200 @@ public class GameScreenController implements Initializable {
     @FXML
     private Text score_text;
     @FXML
-    private Button closebutton;
+    private AnchorPane root_attach;
+    @FXML
+    private FlowPane main_pane;
 
-    ArrayList<String> unusedList = new ArrayList<String>(WordAnalyzer.unsualKeyList);
-    ArrayList<String> sentenceList = new ArrayList<String>();
-    int currentPoint = 0;
-    String newWord;
-    int trueAnwser = 0;
+    private ArrayList<String> unusedList = new ArrayList<String>(WordAnalyzer.unsualKeyList);
+    private ArrayList<String> sentenceList = new ArrayList<String>();
+    private int currentPoint = 0;
+    private String newWord;
+    private int trueAnwser = 0;
+
+    private static final int LIMIT_HIGHSCORE = 8;
+    private Button[] btns;
+    private ImageView imgFalse;
+    private ImageView imgTrue;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Vector unsualList = WordAnalyzer.staticTable.getUnsualWord(WordAnalyzer.baseData);
-        // unsualList.
-        initGame();
     }
 
-    public void anw1ButtonAction() {
-        if (trueAnwser == 1) {
-            nextQuestion();
-        } else {
-            gameFinish();
-        }
-    }
+    public void initGame(Stage stage) {
+        this.stage = stage;
 
-    public void awn2ButtonAction() {
-        if (trueAnwser == 2) {
-            nextQuestion();
-        } else {
-            gameFinish();
-        }
-    }
+        imgFalse = new ImageView(new Image(getClass().getResourceAsStream("../imgs/false_mark.png")));
+        imgFalse.setMouseTransparent(true);
+        imgFalse.setFitWidth(30);
+        imgFalse.setFitHeight(30);
 
-    public void awn3ButtonAction() {
-        if (trueAnwser == 3) {
-            nextQuestion();
-        } else {
-            gameFinish();
-        }
-    }
+        imgTrue = new ImageView(new Image(getClass().getResourceAsStream("../imgs/true_mark.png")));
+        imgTrue.setMouseTransparent(true);
+        imgTrue.setFitWidth(30);
+        imgTrue.setFitHeight(30);
 
-    public void awn4ButtonAction() {
-        if (trueAnwser == 4) {
-            nextQuestion();
-        } else {
-            gameFinish();
-        }
-    }
+        btns = new Button[]{answer1_button, answer2_button, answer3_button, answer4_button, answer5_button};
 
-    public void awn5ButtonAction() {
-        if (trueAnwser == 5) {
-            nextQuestion();
-        } else {
-            gameFinish();
-        }
-    }
-
-    private void initGame() {
         nextQuestion();
     }
 
     private void nextQuestion() {
+        // set to default
+        question_text.setOpacity(0);
+        for (Button btn: btns) btn.setOpacity(0);
+
         // init
-        Random rd = new Random();
+        final Random rd = new Random();
         trueAnwser = rd.nextInt(5) + 1;
         sentenceList = new ArrayList<String>();
 
         if (unusedList.size() > 0) {
-            String[] sentences = null;
-            do {
-                newWord = unusedList.get(rd.nextInt(unusedList.size()));
-                sentences = WordAnalyzer.text.getSentence(newWord);
-                if (sentences != null && sentences.length > 0) break;
-            } while(true);
-            unusedList.remove(newWord);
-            question_text.setText(newWord);
-            score_text.setText("Score: " + currentPoint);
-            currentPoint++;
-            MakeRandom(trueAnwser, newWord, sentences[0]);
+            Task task = new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    try {
+                        String[] sentences = null;
+                        do {
+                            newWord = unusedList.get(rd.nextInt(unusedList.size()));
+                            sentences = WordAnalyzer.text.getSentence(newWord);
+                            if (sentences != null && sentences.length > 0) break;
+                            else unusedList.remove(newWord);
+                        } while (true);
+                        unusedList.remove(newWord);
+                        currentPoint++;
+                        MakeRandom(trueAnwser, newWord, sentences[0]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return null;
+                }
+            };
+
+            (new Thread(task)).start();
         } else {
             gameFinish();
         }
+    }
+
+    private void MakeRandom(int correctAnswer, final String newWord, String rightSentence) {
+        // show question_text
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                question_text.setText(newWord);
+                score_text.setText("Score: " + (currentPoint - 1));
+                showQuiz(1.5, question_text);
+            }
+        });
+
+        System.out.println("Answer:" + correctAnswer);
+        sentenceList.add(0, rightSentence);
+        rightSentence = replaceWordInSenetece(rightSentence, newWord);
+
+        // create wrong scentence
+        final ArrayList<String> sents = new ArrayList<String>();
+        for (int i = 0; i < 4; i++) {
+            String sent = wrongSentence();
+            if (sent != null)
+                sents.add(i, sent);
+        }
+        sents.add(correctAnswer - 1, rightSentence);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < btns.length; i++){
+                    btns[i].setText(sents.get(i));
+                }
+
+                showQuiz(.75, answer1_button, answer2_button, answer3_button, answer4_button, answer5_button);
+            }
+        });
     }
 
     public void gameFinish() {
         //Real point
         currentPoint--;
         //If high score, update data
-        if (currentPoint >0 && isHighScore(currentPoint)) {
-            InputTextPrompt prompt = new InputTextPrompt(
-                    MainScreenController.gameStage
-            );
-            String newName = prompt.getResult();
-            if (newName.compareTo("") == 0) {
-                newName = "Noname";
-            }
+        if (currentPoint > 0 && isHighScore(currentPoint)) {
             int index = 0;
-                while (index < WordAnalyzer.hiscoreData.size() && currentPoint < WordAnalyzer.hiscoreData.get(index).getScore()) {
-                    index++;
+            while (index < WordAnalyzer.hiscoreData.size() && currentPoint <= WordAnalyzer.hiscoreData.get(index).getScore()) {
+                index++;
+            }
+            if (index < LIMIT_HIGHSCORE) {
+                String newName = "";
+
+                try {
+                    final Stage dlg = new Stage();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../utils/Dialog.fxml"));
+                    final Parent root = (Parent) loader.load();
+                    ScoreDialogController controller = loader.getController();
+                    controller.init(dlg, currentPoint, index + 1);
+
+                        dlg.initOwner(stage);
+                        dlg.initStyle(StageStyle.UNDECORATED);
+                        dlg.initModality(Modality.WINDOW_MODAL);
+                        final Scene scene = new Scene(root);
+                            dlg.setScene(scene);
+                            dlg.showAndWait();
+                    newName = controller.getName();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            WordAnalyzer.hiscoreData.add(index, new HighScoreItem(newName, currentPoint));
-            if (WordAnalyzer.hiscoreData.size() == 9) {
-                WordAnalyzer.hiscoreData.remove(8);
+
+                if (newName.compareTo("") == 0) {
+                    newName = "Noname";
+                }
+                WordAnalyzer.hiscoreData.add(index, new HighScoreItem(newName, currentPoint));
+                if (WordAnalyzer.hiscoreData.size() > LIMIT_HIGHSCORE) {
+                    WordAnalyzer.hiscoreData.remove(LIMIT_HIGHSCORE);
+                }
             }
         }
         //close game scene and return to main scene
-        MainScreenController.gameStage.close();
+        stage.close();
         WordAnalyzer.mainStage.show();
-
     }
 
-    private void MakeRandom(int correctAnswer, String newWord, String rightSentence) {
-        System.out.println("Answer:"+correctAnswer);
-        sentenceList.add(0,rightSentence);
-        rightSentence = replaceWordInSenetece(rightSentence, newWord);
-
-        // create wrong scentence
-        ArrayList<String> sents = new ArrayList<String>();
-        for (int i = 0; i < 4; i++){
-            sents.add(i,wrongSentence());
+    public void answerButtonAction(ActionEvent event) {
+        if (checkLoading()) {
+            Button source = (Button) event.getSource();
+            if (btns[trueAnwser-1] == source){
+                showTrue(source);
+            } else {
+                showFalse(source);
+            }
         }
-        sents.add(correctAnswer-1, rightSentence);
+    }
 
-        answer1_button.setText(sents.get(0));
-        answer2_button.setText(sents.get(1));
-        answer3_button.setText(sents.get(2));
-        answer4_button.setText(sents.get(3));
-        answer5_button.setText(sents.get(4));
+    private void showQuiz(double timeInSecond, Node... nodes) {
+        SequentialTransition sequentialTransition = SequentialTransitionBuilder.create().build();
+        for (Node node : nodes) {
+            double old = node.getOpacity();
+            double dest;
+            if (old == 0) dest = 0.7;
+            else dest = 0;
+            FadeTransition fadeTransition = FadeTransitionBuilder.create()
+                    .duration(Duration.seconds(timeInSecond))
+                    .node(node)
+                    .fromValue(old)
+                    .toValue(dest)
+                    .build();
+            sequentialTransition.getChildren().add(fadeTransition);
+        }
+
+        sequentialTransition.play();
     }
 
     private String replaceWordInSenetece(String sentence, String word) {
-        String s = sentence.toLowerCase().replaceFirst("\\b"+word+"\\b","[&]");
+        String s = sentence.toLowerCase().replaceFirst("\\b" + word + "\\b", "[&]");
         int index = s.indexOf("[&]");
-        return sentence.substring(0, index)+"[.........]"+sentence.substring(index+word.length());
+        if (index == -1) return null;
+        return sentence.substring(0, index) + "[.........]" + sentence.substring(index + word.length());
 
     }
 
@@ -194,15 +261,15 @@ public class GameScreenController implements Initializable {
             fakeWord = WordAnalyzer.unsualKeyList.get(index);
             if (fakeWord.compareTo(newWord) == 0) continue;
             String[] sentences = WordAnalyzer.text.getSentence(fakeWord);
-            if (sentences != null && sentences.length > 0){
+            if (sentences != null && sentences.length > 0) {
                 // check if wrong sentence is same as true sentence
-                for (String sentenceToCheck: sentences){
+                for (String sentenceToCheck : sentences) {
                     boolean check = true;
-                    for (String s: sentenceList)
-                    if (sentenceToCheck.compareTo(s) == 0){
-                        check = false;
-                    }
-                    if (check){
+                    for (String s : sentenceList)
+                        if (sentenceToCheck.compareTo(s) == 0) {
+                            check = false;
+                        }
+                    if (check) {
                         sentenceList.add(sentenceToCheck);
                         return replaceWordInSenetece(sentenceToCheck, fakeWord);
                     }
@@ -221,45 +288,74 @@ public class GameScreenController implements Initializable {
         }
         return false;
     }
-}
 
-class InputTextPrompt {
+    private void showTrue(Button node) {
+        double w = node.getBoundsInParent().getWidth();
+        double x = node.getLayoutX();
+        double y = node.getLayoutY() + main_pane.getLayoutY();
 
-    private final String result;
+        imgTrue.setLayoutX(x + w - 20);
+        imgTrue.setLayoutY(y - 15);
+        imgTrue.setOpacity(0);
+       root_attach.getChildren().add(imgTrue);
 
-    public InputTextPrompt(Window owner) {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Enter your name");
-        dialog.initOwner(owner);
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.initModality(Modality.WINDOW_MODAL);
-        final TextField textField = new TextField();
-        final Button submitButton = new Button("Submit");
-        submitButton.setDefaultButton(true);
-        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+       showQuiz(.75, imgTrue);
+      for (Button btn : btns) {
+          if (btn != node)
+                showQuiz(1.5, btn);
+        }
+
+      Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent t) {
-                dialog.close();
+            public void handle(ActionEvent actionEvent) {
+                root_attach.getChildren().clear();
+              nextQuestion();
             }
-        });
-        textField.setMinHeight(TextField.USE_PREF_SIZE);
-
-        final VBox layout = new VBox(10);
-        layout.setAlignment(Pos.CENTER_RIGHT);
-        layout.setStyle("-fx-background-color: azure; -fx-padding: 10;");
-        layout.getChildren().setAll(
-                textField,
-                submitButton
-        );
-
-        dialog.setScene(new Scene(layout));
-        dialog.showAndWait();
-
-        result = textField.getText();
-
+        }));
+      timeline.play();
     }
 
-    public String getResult() {
-        return result;
+  private void showFalse(Button node) {
+        double w = node.getBoundsInParent().getWidth();
+        double x = node.getLayoutX();
+        double y = node.getLayoutY() + main_pane.getLayoutY();
+
+        imgFalse.setLayoutX(x + w - 30);
+        imgFalse.setLayoutY(y - 15);
+        imgFalse.setOpacity(0);
+
+        w = btns[trueAnwser-1].getBoundsInParent().getWidth();
+        x = btns[trueAnwser-1].getLayoutX();
+        y = btns[trueAnwser-1].getLayoutY() + main_pane.getLayoutY();
+
+      imgTrue.setLayoutX(x + w - 30);
+      imgTrue.setLayoutY(y - 15);
+        imgTrue.setOpacity(0);
+       root_attach.getChildren().addAll(imgFalse, imgTrue);
+
+        showQuiz(.75, imgFalse, imgTrue);
+        for (int i = 0; i < btns.length; i++) {
+            if (btns[i] !=node && (i+1) != trueAnwser)
+               showQuiz(.75, btns[i]);
+        }
+
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameFinish();
+                    }
+                });
+            }
+        }));
+       timeline.play();
+    }
+
+    private boolean checkLoading() {
+                return (answer1_button.getOpacity() == .7 && answer2_button.getOpacity() == .7 && answer3_button.getOpacity() == .7 && answer4_button.getOpacity() == .7 && answer5_button.getOpacity() == .7);
     }
 }
