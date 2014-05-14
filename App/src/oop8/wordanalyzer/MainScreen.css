@@ -1,0 +1,116 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09-Apr-2014, 17:04:49
+    Author     : PhiHiep
+*/
+
+.root {
+    display: block;
+    -fx-border-color: #818181;
+    -fx-background-color: #DCDCDC;
+}
+
+/*.root {*/
+    /*-fx-background-image: url("../oop8.imgs/background.jpg");*/
+/*}*/
+
+.label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+#welcome-text {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+}
+
+.button:hover {
+     -fx-cursor: hand;
+}
+
+#closebutton{
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;   
+    -fx-background-size: 20px 20px;
+    -fx-background-image:url("../imgs/close.png");
+}
+
+
+#minibutton{
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px 20px;
+    -fx-background-image:url("../imgs/mini.png");
+}
+
+#tutorialbutton{
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px 20px;
+    -fx-background-image:url("../imgs/tutorial.png");
+}
+
+#gamebutton, #openbutton{
+    -fx-background-radius: 5px;
+}
+
+#gamebutton:hover, #openbutton:hover{
+    -fx-cursor: hand;
+    -fx-background-color:aquamarine;
+}
+
+#gamebutton:pressed, #openbutton:pressed{
+    -fx-background-color: aqua;
+}
+
+.clickable:hover{
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+#front-layer{
+    -fx-background-color: azure;
+}
+
+/**
+NotificationPane
+*/
+.notification-pane .notification-bar > .pane {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-color: aquamarine;
+    -fx-padding: 0 7 0 7;
+}
+
+.notification-pane.alert .notification-bar > .pane {
+    -fx-background-color: #ff4600;
+}
+
+.notification-pane.explain .notification-bar > .pane {
+    -fx-background-color: #3eff17;
+}
+
+.notification-pane.top .notification-bar > .pane {
+    -fx-background-insets: 0 0 0 0, 0 0 1 0, 0 0 2 0;
+}
+
+.notification-pane.bottom .notification-bar > .pane {
+    -fx-background-insets: 0 0 0 0, 1 0 0 0, 2 0 0 0;
+}
+
+.notification-pane .notification-bar > .pane .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: lighter;
+    -fx-font-family: monospace;
+    -fx-text-fill: #333333;
+}
